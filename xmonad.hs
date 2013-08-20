@@ -49,7 +49,7 @@ myTerminal      = "urxvt"
 modMask' :: KeyMask
 modMask' = mod4Mask
 -- Define workspaces
-myWorkspaces    = ["1:main","2:irc","3:web","4:dev","5:foo()","6:wine"]
+myWorkspaces    = ["1:main","2:irc","3:web","4:dev","5:foo()","6:comm"]
 -- Dzen config
 myBitmapsDir = "/home/serrghi/.xmonad/dzen"
 --}}}
@@ -78,7 +78,7 @@ manageHook' = (composeAll . concat $
     [ [resource     =? r            --> doIgnore            |   r   <- myIgnores] -- ignore desktop
     , [className    =? c            --> doShift  "3:web"    |   c   <- myWebs   ] -- move webs to webs
     , [className    =? c            --> doShift  "4:dev"    |   c   <- myDevs   ] -- move devs to devs
-    , [className    =? c            --> doF(W.shift "6:wine")   |   c   <- myWines  ] -- move wines to wine
+    , [className    =? c            --> doF(W.shift "6:comm")   |   c   <- myComms] -- move comms to Comms
     , [className    =? c            --> doCenterFloat       |   c   <- myFloats ] -- float my floats
     , [name         =? n            --> doCenterFloat       |   n   <- myNames  ] -- float my names
     , [isFullscreen                 --> myDoFullFloat                           ]
@@ -93,7 +93,7 @@ manageHook' = (composeAll . concat $
         myFloats  = ["MPlayer","Zenity","VirtualBox","Xmessage","Save As...","XFontSel","Downloads","Nm-connection-editor"]
         myWebs    = ["Navigator","Shiretoko","Firefox","Uzbl","uzbl","Uzbl-core","uzbl-core","Google-chrome","Chromium","Shredder","Mail"]
         myDevs    = ["Eclipse","eclipse","Netbeans","Gvim"]
-        myWines   = ["Wine"]
+        myComms   = ["Skype"]
 
         -- resources
         myIgnores = ["desktop","desktop_window","notify-osd","stalonetray","trayer"]
