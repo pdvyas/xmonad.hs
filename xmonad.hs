@@ -15,6 +15,7 @@ import XMonad.Util.Run
 
 
 import XMonad.Actions.CycleWS
+import XMonad.Actions.UpdatePointer
 
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -50,12 +51,11 @@ modMask' = mod4Mask
 -- Define workspaces
 myWorkspaces    = ["1:main","2:irc","3:web","4:dev","5:foo()","6:wine"]
 -- Dzen config
-myStatusBar = "dzen2 -x '0' -y '0' -h '24' -w '1280' -ta 'l' -fg '#FFFFFF' -bg '#161616' -fn '-*-bitstream vera sans-medium-r-normal-*-11-*-*-*-*-*-*-*'"
 myBitmapsDir = "/home/serrghi/.xmonad/dzen"
 --}}}
 -- Main {{{
 main = do
-    dzenTopBar <- spawnPipe myStatusBar
+    h <- spawnPipe "xmobar /home/pdvyas/.xmobarrc"
     xmonad $ defaultConfig
       { terminal            = myTerminal
       , workspaces          = myWorkspaces
@@ -64,7 +64,7 @@ main = do
       , startupHook         = ewmhDesktopsStartup >> setWMName "LG3D"
       , layoutHook          = layoutHook'
       , manageHook          = manageHook'
-      , logHook             = myLogHook dzenTopBar >> fadeInactiveLogHook 0xdddddddd  >> setWMName "LG3D"
+      , logHook             = logHook' h
       , normalBorderColor   = colorNormalBorder
       , focusedBorderColor  = colorFocusedBorder
 }
@@ -101,34 +101,27 @@ manageHook' = (composeAll . concat $
         -- names
         myNames   = ["bashrun","Google Chrome Options","Chromium Options"]
 
+-- bar
+logHook' :: Handle -> X ()
+logHook' h = dynamicLogWithPP (customPP { ppOutput = hPutStrLn h })
+             >> updatePointer (Relative 0 0)
+
+layoutHook' = customLayout
+
+customPP :: PP
+customPP = defaultPP { ppCurrent = xmobarColor "#FFEE00" "" . wrap "[" "]"
+                     , ppVisible = xmobarColor "#5599FF" "" . wrap "<" ">"
+                     , ppTitle = shorten 70
+                     , ppSep = "<fc=#AFAF87>|</fc>"
+                     , ppHiddenNoWindows = xmobarColor "#404040" ""
+                     , ppUrgent = xmobarColor "#ff0000" "" . wrap "!" "!"
+                     }
+
 -- a trick for fullscreen but stil allow focusing of other WSs
 myDoFullFloat :: ManageHook
 myDoFullFloat = doF W.focusDown <+> doFullFloat
 -- }}}
-layoutHook' = customLayout
 
--- Bar
-myLogHook :: Handle -> X ()
-myLogHook h = dynamicLogWithPP $ defaultPP
-    {
-        ppCurrent           =   dzenColor "#ebac54" "#161616" . pad
-      , ppVisible           =   dzenColor "white" "#161616" . pad
-      , ppHidden            =   dzenColor "white" "#161616" . pad
-      , ppHiddenNoWindows   =   dzenColor "#444444" "#161616" . pad
-      , ppUrgent            =   dzenColor "red" "#161616" . pad
-      , ppWsSep             =   " "
-      , ppSep               =   "  |  "
-      , ppLayout            =   dzenColor "#ebac54" "#161616" .
-                                (\x -> case x of
-                                    "ResizableTall"             ->      "^i(" ++ myBitmapsDir ++ "/tall.xbm)"
-                                    "Mirror ResizableTall"      ->      "^i(" ++ myBitmapsDir ++ "/mtall.xbm)"
-                                    "Full"                      ->      "^i(" ++ myBitmapsDir ++ "/full.xbm)"
-                                    "Simple Float"              ->      "~"
-                                    _                           ->      x
-                                )
-      , ppTitle             =   (" " ++) . dzenColor "white" "#161616" . dzenEscape
-      , ppOutput            =   hPutStrLn h
-    }
 -- Layout
 customLayout = gaps [(D,16)] $ avoidStruts $ smartBorders tiled ||| smartBorders (Mirror tiled)  ||| noBorders Full ||| smartBorders simpleFloat
   where
