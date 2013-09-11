@@ -183,9 +183,8 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
     -- Media Keys
     , ((0,                          0x1008ff12  ), spawn "vol mute") -- XF86AudioMute
-    , ((0,                          0x1008ff11  ), spawn "vol down") -- XF86AudioLowerVolume
-    , ((0,                          0x1008ff13  ), spawn "vol up") -- XF86AudioRaiseVolume
-
+    , ((0,                          0x1008ff11  ), spawn "amixer set Master 2-") -- XF86AudioLowerVolume
+    , ((0,                          0x1008ff13  ), spawn "amixer set Master 2+") -- XF86AudioRaiseVolume
 
     -- focus
     , ((modMask, xK_j ), windows W.focusDown)
