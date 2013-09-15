@@ -36,6 +36,7 @@ import XMonad.Layout.ResizableTile
 import XMonad.Layout.NoBorders
 import XMonad.Layout.LayoutCombinators
 import XMonad.Layout.Gaps
+import XMonad.Layout.LayoutHints
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
@@ -123,7 +124,7 @@ myDoFullFloat = doF W.focusDown <+> doFullFloat
 -- }}}
 
 -- Layout
-customLayout = gaps [(D,16)] $ avoidStruts $ smartBorders tiled ||| smartBorders (Mirror tiled)  ||| noBorders Full ||| smartBorders simpleFloat
+customLayout = layoutHints ( gaps [(D,16)] $ avoidStruts $ smartBorders tiled ||| smartBorders (Mirror tiled)  ||| noBorders Full ||| smartBorders simpleFloat)
   where
     --tiled = ResizableTall 1 (2/100) (1/2) []
     tiled   = ResizableTall nmaster delta ratio []
