@@ -180,7 +180,10 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask,                    xK_e        ), spawn "pcmanfm")
 
     -- Media Keys
-    , ((0,                          0x1008ff12  ), spawn "vol mute") -- XF86AudioMute
+    , ((0,                          0x1008ff16  ), spawn "mpc prev") -- XF86AudioPrev
+    , ((0,                          0x1008ff14  ), spawn "mpc toggle") -- XF86AudioPlay
+    , ((0,                          0x1008ff17  ), spawn "mpc next") -- XF86AudioNext
+    , ((0,                          0x1008ff12  ), spawn "amixer set Master toggle") -- XF86AudioMute
     , ((0,                          0x1008ff11  ), spawn "amixer set Master 2-") -- XF86AudioLowerVolume
     , ((0,                          0x1008ff13  ), spawn "amixer set Master 2+") -- XF86AudioRaiseVolume
 
