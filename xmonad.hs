@@ -205,9 +205,9 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. shiftMask, xK_f ), sendMessage $ JumpToLayout "ResizableTall")
 
     -- workspaces
-    , ((mod1Mask .|. controlMask,   xK_Right    ), nextWS)
+    , ((modMask,					xK_l		), nextWS)
     , ((mod1Mask .|. shiftMask,     xK_Right    ), shiftToNext)
-    , ((mod1Mask .|. controlMask,   xK_Left     ), prevWS)
+    , ((modMask,					xK_h		), prevWS)
     , ((mod1Mask .|. shiftMask,     xK_Left     ), shiftToPrev)
     , ((modMask,                 xK_z   ),  toggleWS)
     
