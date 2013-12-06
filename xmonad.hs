@@ -36,7 +36,6 @@ import XMonad.Layout.ResizableTile
 import XMonad.Layout.NoBorders
 import XMonad.Layout.LayoutCombinators
 import XMonad.Layout.Gaps
-import XMonad.Layout.LayoutHints
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
@@ -51,8 +50,6 @@ modMask' :: KeyMask
 modMask' = mod4Mask
 -- Define workspaces
 myWorkspaces    = ["1:main","2:irc","3:web","4:dev","5:foo()","6:comm"]
--- Dzen config
-myBitmapsDir = "/home/serrghi/.xmonad/dzen"
 --}}}
 -- Main {{{
 main = do
@@ -124,10 +121,10 @@ myDoFullFloat = doF W.focusDown <+> doFullFloat
 -- }}}
 
 -- Layout
-customLayout = layoutHints ( gaps [(D,16)] $ avoidStruts $ smartBorders tiled ||| smartBorders (Mirror tiled)  ||| noBorders Full ||| smartBorders simpleFloat)
+customLayout = avoidStruts $ smartBorders tiled ||| smartBorders (Mirror tiled)  ||| noBorders Full ||| smartBorders simpleFloat
   where
-    --tiled = ResizableTall 1 (2/100) (1/2) []
-    tiled   = ResizableTall nmaster delta ratio []
+    tiled = ResizableTall 1 (2/100) (1/2) []
+    -- tiled   = ResizableTall nmaster delta ratio []
     nmaster = 1   
     delta   = 2/100
     ratio   = 1/2
