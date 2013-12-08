@@ -40,6 +40,8 @@ import XMonad.Layout.Gaps
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 
+import XMonad.Hooks.EwmhDesktops
+
 --}}}
 
 -- Config {{{
@@ -65,6 +67,7 @@ main = do
       , logHook             = logHook' h
       , normalBorderColor   = colorNormalBorder
       , focusedBorderColor  = colorFocusedBorder
+      , handleEventHook    = fullscreenEventHook
 }
 --}}}
 
