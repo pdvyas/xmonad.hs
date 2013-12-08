@@ -1,0 +1,23 @@
+-- -*-Haskell-*-
+
+Config { font = "xft:Monospace:size=8:bold"
+       , bgColor = "black"
+       , fgColor = "white"
+       , position = Top
+       , lowerOnStart = True
+       , commands = [  Run Wireless "wlp3s0" ["-L","0","-H","32","--normal","green","--high","red", "-t", "<essid>"] 500
+                    , Run BatteryP ["BAT0"]
+                      ["-t", "<acstatus><left>%",
+                       "-L", "10", "-H", "80", "-p", "3",
+                       "--", "-O", "", "-o", "<fc=red>B</fc>",
+                       "-l", "red", "-m", "blue", "-h", "green"]
+                      300
+                    , Run Date "%d %a %I:%M" "date" 600
+                    , Run StdinReader
+                    -- , Run ThermalZone 0 ["-t", "T:<temp>C"] 30
+                    -- , Run MPD ["-t", "<title> (<statei>) <remaining>"] 10
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%StdinReader% }{ BAT:%battery% wifi:%wlp3s0wi% | <fc=#ee9a00>%date%</fc> | pd"
+       }
