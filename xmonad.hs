@@ -183,6 +183,8 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask,                    xK_e        ), spawn "pcmanfm")
 
     -- Media Keys
+    , ((0,                          0x1008ff03  ), spawn "xbacklight -dec 10") -- XF86MonBrightnessDown
+    , ((0,                          0x1008ff02  ), spawn "xbacklight -inc 10") -- XF86MonBrightnessUp
     , ((0,                          0x1008ff16  ), spawn "mpc prev") -- XF86AudioPrev
     , ((0,                          0x1008ff14  ), spawn "mpc toggle") -- XF86AudioPlay
     , ((0,                          0x1008ff17  ), spawn "mpc next") -- XF86AudioNext
